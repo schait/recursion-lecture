@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<!-- saved from url=(0089)file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Recursion | Hackbright Engineering</title>
+
+      <link href="./Recursion_files/pygments.css" rel="stylesheet" type="text/css">
+      <link href="./Recursion_files/main.css" rel="stylesheet" type="text/css">
+          <link rel="stylesheet" type="text/css" href="./Recursion_files/plot_directive.css">
+          <link rel="stylesheet" type="text/css" href="./Recursion_files/graphviz.css">
+          <link rel="stylesheet" type="text/css" href="./Recursion_files/quickfixstyles.css">
+
+      <script src="./Recursion_files/pdfobject.min.js"></script>
+      
+  </head>
+  <body>
+      <div id="handouts-container">
+        <header id="page-header">
+            <p id="project-title">Hackbright Engineering</p>
+            <p id="page-title">Recursion</p>
+              <p id="backlink">
+                <a href="file:///"> « Back to Homepage </a>
+              </p>
+        </header>
+
+        <nav id="page-toc"><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#">Recursion</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#download-demo">Download Demo</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#id1">Recursion</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#goals">Goals</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#review-functions-calling-functions">Review: Functions Calling Functions</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#id2">Recursion</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recursion-analogy-nesting-dolls">Recursion Analogy: Nesting Dolls</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#the-call-stack">The Call Stack</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#count-to-3">Count to 3</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#call-stack-stack-frames">Call Stack / Stack Frames</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#more-counting">More Counting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recursion-requirements">Recursion Requirements</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#base-case">Base Case</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#explicit-vs-hidden-base-cases">Explicit vs. Hidden Base Cases</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#progress">Progress</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#what-if-there-s-no-base-case">What If There’s No Base Case?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#strategies-for-recursion">Strategies for Recursion</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#example">Example</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#what-s-the-base-case">What’s the Base Case?</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#make-the-problem-smaller-and-smaller">Make the Problem Smaller and Smaller</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#strategy-1-top-down-backpack">Strategy #1: Top-Down / “Backpack”</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#strategy-2-bottom-up-breadcrumbs">Strategy #2: Bottom-Up / “Breadcrumbs”</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#list-doubler">List Doubler</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#the-problem">The Problem</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#the-challenge">The Challenge</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#oh-no">Oh No!</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#arbitrary-depth-with-loop">Arbitrary Depth with Loop</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#non-recursively">Non-Recursively</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recursively">Recursively</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#trees">Trees</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#id6">Trees</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#indenting-recursive">Indenting Recursive</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recognizing-recursion">Recognizing Recursion</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#filesystems">Filesystems</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#fractals">Fractals</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#parsing">Parsing</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#nested-data">Nested Data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#looking-ahead">Looking Ahead</a><ul>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#coming-up">Coming Up</a></li>
+<li><a class="reference internal" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#resources">Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+
+        <main id="page-content">
+            <section class="section" id="recursion">
+<h1>Recursion<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recursion" title="Permalink to this headline">¶</a></h1>
+<section class="section" id="download-demo">
+<h2>Download Demo<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#download-demo" title="Permalink to this headline">¶</a></h2>
+<p>To download the demo code for this lecture, run the following:</p>
+<pre class="console literal-block">$ <span class="cmd">hbget recursion --demo</span></pre>
+</section>
+<section class="section" id="id1">
+<h2>Recursion<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#id1" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="goals">
+<h3>Goals<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#goals" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Define recursion</p></li>
+<li><p>Introduce idea of “call stack”</p></li>
+<li><p>Look at lots of recursion examples</p></li>
+<li><p>Strategies for doing recursion</p></li>
+</ul>
+</section>
+<section class="section" id="review-functions-calling-functions">
+<h3>Review: Functions Calling Functions<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#review-functions-calling-functions" title="Permalink to this headline">¶</a></h3>
+<div class="compare docutils container">
+<div class="docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">a</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"hello"</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"python"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">b</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"world"</span><span class="p">)</span>
+    <span class="n">c</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"love"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">c</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"i"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="fragment docutils container">
+<pre class="console literal-block">| → <span class="green">a()</span>
+| <span class="cmd">hello</span>
+|
+| | → <span class="green">b()</span>
+| | <span class="cmd">world</span>
+| |
+| | | → <span class="green">c()</span>
+| | | <span class="cmd">i</span>
+| | | ← <span class="red">None from c()</span>
+| |
+| | <span class="cmd">love</span>
+| | ← <span class="red">None from b()</span>
+|
+| <span class="cmd">python</span>
+| ← <span class="red">None from a()</span></pre>
+</div>
+</div>
+<div class="fragment docutils container">
+<p>→ “hello world i love python”</p>
+<p><a class="reference external" href="http://pythontutor.com/render.html#code=def%20a%28%29%3A%0A%20%20%20%20print%28%22hello%22%29%0A%20%20%20%20b%28%29%0A%20%20%20%20print%28%22python%22%29%0A%0Adef%20b%28%29%3A%0A%20%20%20%20print%28%22world%22%29%0A%20%20%20%20c%28%29%0A%20%20%20%20print%28%22love%22%29%0A%0Adef%20c%28%29%3A%0A%20%20%20%20print%28%22i%22%29%0A%0Aa%28%29&amp;cumulative=false&amp;curInstr=0&amp;heapPrimitives=nevernest&amp;mode=display&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false" target="_blank">See this code in Python Visualizer</a></p>
+</div>
+<p>When you call a function, you “freeze” where you are
+until that function returns, and then continue where you left off.</p>
+<p>So <cite>a</cite> prints <code class="docutils literal notranslate"><span class="pre">hello</span></code>, calls <cite>b</cite> which prints <code class="docutils literal notranslate"><span class="pre">world</span></code>, calls <cite>c</cite>
+which prints <code class="docutils literal notranslate"><span class="pre">i</span></code> and returns back to <cite>b</cite> which then prints <code class="docutils literal notranslate"><span class="pre">love</span></code>
+which then returns back to <cite>a</cite> which prints <code class="docutils literal notranslate"><span class="pre">python</span></code>.</p>
+</section>
+<section class="section" id="id2">
+<h3>Recursion<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#id2" title="Permalink to this headline">¶</a></h3>
+<div class="fragment docutils container">
+<p>Having a function call itself</p>
+</div>
+<div class="fragment docutils container">
+<p>Also: a very powerful programming technique</p>
+</div>
+<div class="fragment docutils container">
+<p>Also: a popular interview question topic</p>
+</div>
+</section>
+<section class="section" id="recursion-analogy-nesting-dolls">
+<h3>Recursion Analogy: Nesting Dolls<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recursion-analogy-nesting-dolls" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Each doll represents a function call</p></li>
+<li><p>As function calls itself, it pops open to reveal a new doll</p></li>
+<li><p>As recursive functions complete, dolls pop back together (in reverse order)</p></li>
+</ul>
+</section>
+</section>
+<section class="section" id="the-call-stack">
+<h2>The Call Stack<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#the-call-stack" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="count-to-3">
+<h3>Count to 3<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#count-to-3" title="Permalink to this headline">¶</a></h3>
+<p>It turns out, any loop can be written instead with recursion (and vice versa).</p>
+<div class="compare docutils container">
+<div class="fragment docutils container">
+<p>Using a <cite>while</cite> loop:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_loop</span><span class="p">():</span>
+    <span class="sd">"""Count to 3, using a while loop."""</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="fragment docutils container">
+<p>Using recursion:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_recursive</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">"""Count to 3, using recursion."""</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">count_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="fragment docutils container">
+<p><a class="reference external" href="http://pythontutor.com/render.html#code=def%20count_recursive%28n%3D1%29%3A%0A%20%20%20%20%22%22%22Count%20to%203,%20using%20recursion.%22%22%22%0A%0A%20%20%20%20if%20n%20%3E%203%3A%0A%20%20%20%20%20%20%20%20return%0A%0A%20%20%20%20print%28n%29%0A%20%20%20%20count_recursive%28n%20%2B%201%29%0A%0Acount_recursive%28%29&amp;cumulative=false&amp;curInstr=0&amp;heapPrimitives=nevernest&amp;mode=display&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false" target="_blank">See this code in Python Visualizer</a></p>
+</div>
+</section>
+<section class="section" id="call-stack-stack-frames">
+<h3>Call Stack / Stack Frames<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#call-stack-stack-frames" title="Permalink to this headline">¶</a></h3>
+<div class="compare docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_recursive</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">"""Count to 3, using recursion."""</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">count_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="docutils container">
+<pre class="console literal-block">| → <span class="green">count(n=1)</span>
+| <span class="cmd">1</span>
+|
+| | → <span class="green">count(n=2)</span>
+| | <span class="cmd">2</span>
+| |
+| | | → <span class="green">count(n=3)</span>
+| | | <span class="cmd">3</span>
+| | |
+| | | | → <span class="green">count(n=4)</span>
+| | | | ← <span class="red">None from count(n=4)</span>
+| | |
+| | | ← <span class="red">None from count(n=3)</span>
+| |
+| | ← <span class="red">None from count(n=2)</span>
+|
+  | ← <span class="red">None from count(n=1)</span></pre>
+</div>
+</div>
+</section>
+<section class="section" id="more-counting">
+<h3>More Counting<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#more-counting" title="Permalink to this headline">¶</a></h3>
+<div class="compare docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_recursive</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">"""Print numbers from 1 to 3."""</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">count_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<div class="fragment docutils container">
+<pre class="console literal-block">| → <span class="green">count_recursive(n=1)</span>
+| <span class="cmd">1</span>
+|
+| | → <span class="green">count_recursive(n=2)</span>
+| | <span class="cmd">2</span>
+| |
+| | | → <span class="green">count_recursive(n=3)</span>
+| | | <span class="cmd">3</span>
+| | |
+| | | | → <span class="green">count_recursive(n=4)</span>
+| | | | ← <span class="red">None from count_recursive(n=4)</span>
+| | |
+| | | <span class="cmd">-3</span>
+| | | ← <span class="red">None from count_recursive(n=3)</span>
+| |
+| | <span class="cmd">-2</span>
+| | ← <span class="red">None from count_recursive(n=2)</span>
+|
+| <span class="cmd">-1</span>
+| ← <span class="red">None from count_recursive(n=1)</span></pre>
+</div>
+</div>
+</section>
+</section>
+<section class="section" id="recursion-requirements">
+<h2>Recursion Requirements<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recursion-requirements" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="base-case">
+<h3>Base Case<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#base-case" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_recursive</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">"""Count to 3, using recursion."""</span>
+
+<span class="hll">    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+</span><span class="hll">        <span class="k">return</span>
+</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">count_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Every recursive function needs a <cite>base case</cite></p>
+<ul>
+<li><p>How do we know when we’re done?</p></li>
+<li><p>Like a stop sign</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="section" id="explicit-vs-hidden-base-cases">
+<h3>Explicit vs. Hidden Base Cases<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#explicit-vs-hidden-base-cases" title="Permalink to this headline">¶</a></h3>
+<div class="compare docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_recursive</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">"""Count to 3, using recursion."""</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">count_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_recursive_alt</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">"""Print numbers from 1 to 3."""</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">count_recursive_alt</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section class="section" id="progress">
+<h3>Progress<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#progress" title="Permalink to this headline">¶</a></h3>
+<p>We have to be moving forward toward the base case.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_recursive</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">"""Count to 3, using recursion."""</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="hll">    <span class="n">count_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section class="section" id="what-if-there-s-no-base-case">
+<h3>What If There’s No Base Case?<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#what-if-there-s-no-base-case" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+  <span class="sd">"""Print numbers from 1 to forever."""</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+  <span class="n">count</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="fragment docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count</span><span class="p">()</span>
+<span class="go">1 2 3 4 5 ... 995 996 997 998 999</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">3</span>, in <span class="n">count</span>
+      <span class="o">...</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">3</span>, in <span class="n">count</span>
+<span class="gr">RecursionError</span>: <span class="n">maximum recursion depth exceeded while calling a Python object 999</span>
+</pre></div>
+</div>
+</div>
+<div class="fragment docutils container">
+<p>The same error will happen if you have a base case but don’t make progress toward it.</p>
+</div>
+<p>This error is also called a Stack Overflow error.</p>
+</section>
+</section>
+<section class="section" id="strategies-for-recursion">
+<h2>Strategies for Recursion<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#strategies-for-recursion" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="example">
+<h3>Example<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#example" title="Permalink to this headline">¶</a></h3>
+<p>Using recursion, find the sum of a list of numbers. (You can’t use the built-in <cite>sum()</cite> function.)</p>
+</section>
+<section class="section" id="what-s-the-base-case">
+<h3>What’s the Base Case?<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#what-s-the-base-case" title="Permalink to this headline">¶</a></h3>
+<p>Often a base case is an “empty case” — e.g. an empty array, <cite>None</cite>, a leaf in a tree, etc.</p>
+<div class="fragment docutils container">
+<p>Here, a good base case would be an empty list.</p>
+</div>
+</section>
+<section class="section" id="make-the-problem-smaller-and-smaller">
+<h3>Make the Problem Smaller and Smaller<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#make-the-problem-smaller-and-smaller" title="Permalink to this headline">¶</a></h3>
+<p>Many recursion problems involve “breaking off a piece” and making the problem smaller and smaller.</p>
+<ul class="simple">
+<li class="fragment"><p>sum of numbers = first number + sum of rest of numbers</p></li>
+<li class="fragment"><p>sum([1, 2, 3]) →</p></li>
+<li class="fragment"><p>1 + sum([2, 3]) →</p></li>
+<li class="fragment"><p>1 + 2 + sum([3]) →</p></li>
+<li class="fragment"><p>1 + 2 + 3 + sum([])  ← <span class="red">base case: empty list!</span></p></li>
+</ul>
+<img alt="_images/back_substitution.png" src="./Recursion_files/back_substitution.png" style="width: 880px;">
+</section>
+<section class="section" id="strategy-1-top-down-backpack">
+<h3>Strategy #1: Top-Down / “Backpack”<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#strategy-1-top-down-backpack" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sum_nums_1</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">""" Sum list of numbers recursively using "backpack" or "top down" strategy """</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">total</span>
+
+    <span class="n">remaining_nums</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">running_total</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">sum_nums_1</span><span class="p">(</span><span class="n">remaining_nums</span><span class="p">,</span> <span class="n">running_total</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li class="fragment"><p>Add a parameter (with a default value) to store the result at each step — the “backpack” variable</p></li>
+<li class="fragment"><p>When you break off a piece and make a recursive call, update this variable</p></li>
+<li class="fragment"><p>When you reach the base case, return this variable</p></li>
+</ul>
+<div class="fragment docutils container">
+<p><a class="reference external" href="https://pythontutor.com/render.html#code=def%20sum_nums_1%28nums,%20total%3D0%29%3A%0A%20%20%20%20%22%22%22%20Sum%20list%20of%20numbers%20recursively%20using%20%22backpack%22%20or%20%22top%20down%22%20strategy%20%22%22%22%0A%0A%20%20%20%20if%20not%20nums%3A%0A%20%20%20%20%20%20%20%20return%20total%0A%0A%20%20%20%20remaining_nums%20%3D%20nums%5B1%3A%5D%0A%20%20%20%20running_total%20%3D%20total%20%2B%20nums%5B0%5D%0A%0A%20%20%20%20return%20sum_nums_1%28remaining_nums,%20running_total%29%0A%0Aprint%28sum_nums_1%28%5B1,%202,%203%5D%29%29&amp;cumulative=false&amp;curInstr=0&amp;heapPrimitives=nevernest&amp;mode=display&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false" target="_blank">See this code in Python Visualizer</a></p>
+</div>
+</section>
+<section class="section" id="strategy-2-bottom-up-breadcrumbs">
+<h3>Strategy #2: Bottom-Up / “Breadcrumbs”<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#strategy-2-bottom-up-breadcrumbs" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sum_nums_2</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="sd">""" Sum list of numbers recursively using "breadcrumbs" or "bottom up" strategy """</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="n">first_num</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">sum_of_remaining</span> <span class="o">=</span> <span class="n">sum_nums_2</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">return</span> <span class="n">first_num</span> <span class="o">+</span> <span class="n">sum_of_remaining</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li class="fragment"><p>When you make a recursive call, leave a “breadcrumb” to pick up on the way back</p></li>
+<li class="fragment"><p>After returning from each function call, pick up the “breadcrumbs”</p></li>
+<li class="fragment"><p>In this example, return 0 when you reach the base case, because the sum of an empty list is 0</p></li>
+</ul>
+<div class="fragment docutils container">
+<p><a class="reference external" href="https://pythontutor.com/render.html#code=def%20sum_nums_2%28nums%29%3A%0A%20%20%20%20%22%22%22%20Sum%20list%20of%20numbers%20recursively%20using%20%22breadcrumbs%22%20or%20%22bottom%20up%22%20strategy%20%22%22%22%0A%0A%20%20%20%20if%20not%20nums%3A%0A%20%20%20%20%20%20%20%20return%200%0A%0A%20%20%20%20sum_of_remaining%20%3D%20sum_nums_2%28nums%5B1%3A%5D%29%0A%0A%20%20%20%20return%20nums%5B0%5D%20%2B%20sum_of_remaining%0A%0Aprint%28sum_nums_2%28%5B1,%202,%203%5D%29%29&amp;cumulative=false&amp;curInstr=0&amp;heapPrimitives=nevernest&amp;mode=display&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false" target="_blank">See this code in Python Visualizer</a></p>
+</div>
+</section>
+</section>
+<section class="section" id="list-doubler">
+<h2>List Doubler<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#list-doubler" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="the-problem">
+<h3>The Problem<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#the-problem" title="Permalink to this headline">¶</a></h3>
+<p>“For every item in a list, print the value, doubled”</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>  <span class="c1">#  =&gt; 2 4 6</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doubler_basic</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="sd">"""Print every item in list, doubled."""</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section class="section" id="the-challenge">
+<h3>The Challenge<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#the-challenge" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li class="fragment"><p>Some items can be lists themselves</p></li>
+<li class="fragment"><p>We want to “flatten” them and still print doubled</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">4</span> <span class="p">]</span>  <span class="c1">#   =&gt; 2 4 6 8</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="fragment docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doubler_flattener</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="sd">"""Print items in flattened list, doubled, for 1 level of nesting"""</span>
+
+    <span class="k">for</span> <span class="n">original_list_item</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">original_list_item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">sublist_item</span> <span class="ow">in</span> <span class="n">original_list_item</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">sublist_item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">original_list_item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section class="section" id="oh-no">
+<h3>Oh No!<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#oh-no" title="Permalink to this headline">¶</a></h3>
+<p>Some of <em>those</em> items can be lists!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">5</span><span class="p">]</span>  <span class="c1"># =&gt; 2 4 6 8 10</span>
+</pre></div>
+</div>
+<div class="fragment docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doubler_flattener_more</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="sd">"""Print items in flattened list, doubled, for 2 levels of nesting."""</span>
+
+    <span class="k">for</span> <span class="n">original_list_item</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">original_list_item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">sublist_item</span> <span class="ow">in</span> <span class="n">original_list_item</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sublist_item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">nested_item</span> <span class="ow">in</span> <span class="n">sublist_item</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">nested_item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">sublist_item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">original_list_item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section class="section" id="arbitrary-depth-with-loop">
+<h3>Arbitrary Depth with Loop<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#arbitrary-depth-with-loop" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doubler_no_recursion</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="sd">"""Print items in list doubled, not using recursion."""</span>
+
+    <span class="n">stack</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+
+    <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">current_item</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current_item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="c1"># If it's a list, add it to stack, reversed</span>
+            <span class="k">for</span> <span class="n">inner</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">current_item</span><span class="p">):</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inner</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">current_item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="fragment docutils container">
+<p>It works, but it’s pretty difficult to understand!</p>
+</div>
+<p>This solution uses a stack data structure to add new items to the end and remove them from the
+same side so we always remove the item most recently added.</p>
+<p>This code is worth studying and reasoning about even though this problem is more better suited for recursion.</p>
+</section>
+<section class="section" id="non-recursively">
+<h3>Non-Recursively<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#non-recursively" title="Permalink to this headline">¶</a></h3>
+<div class="resizer" style="width: 300px;"><div class="graphviz"><object data="./Recursion_files/graphviz-eb7fb95c5951d07630b2598f8236790c597d3888.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph name {
+function [label=&lt;Function()&gt;]
+loop [label=&lt;For Item in List&gt;]
+islist [label=&lt;Is Item a List?&gt;]
+print [label=&lt;Print&gt;]
+loop1 [label=&lt;For Item in List&gt;]
+islist1 [label=&lt;Is Item a List?&gt;]
+print1 [label=&lt;Print&gt;]
+loop2 [label=&lt;For Item in List&gt;]
+islist2 [label=&lt;Is Item a List? ...&gt;]
+
+function -&gt; loop
+loop -&gt; islist
+islist -&gt; loop1 [label="  yes"]
+islist -&gt; print [label="  no"]
+loop1 -&gt; islist1
+islist1 -&gt; loop2 [label="  yes"]
+islist1 -&gt; print1 [label="  no"]
+loop2 -&gt; islist2
+}</p></object></div>
+</div></section>
+<section class="section" id="recursively">
+<h3>Recursively<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recursively" title="Permalink to this headline">¶</a></h3>
+<div class="resizer" style="width: 300px;"><div class="graphviz"><object data="./Recursion_files/graphviz-0e224621a8dcc37b0656eb88ea0aee253647e717.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph name {
+function [label=&lt;Function()&gt;]
+loop [label=&lt;For Item in List&gt;]
+islist [label=&lt;Is Item a List?&gt;]
+print [label=&lt;Print&gt;]
+
+function -&gt; loop
+loop -&gt; islist
+islist -&gt; function [taillabel="       yes", label="  recurse" constraint=false]
+islist -&gt; print [taillabel="no  "]
+}</p></object></div>
+</div><div class="compare docutils container">
+<div class="docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doubler</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="sd">"""Print items in list doubled, using recursion."""</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">doubler</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">item</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">doubler</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="fragment docutils container">
+<pre class="console literal-block">| → <span class="green">doubler(lst=[1, [2, [3], 4], 5])</span>
+| <span class="cmd">2</span>
+|
+| | → <span class="green">doubler(lst=[2, [3], 4])</span>
+| | <span class="cmd">4</span>
+| |
+| | | → <span class="green">doubler(lst=[3])</span>
+| | | <span class="cmd">6</span>
+| | |
+| | | ← <span class="red">None from doubler(lst=[3])</span>
+| |
+| | <span class="cmd">8</span>
+| | ← <span class="red">None from doubler(lst=[2, [3], 4])</span>
+|
+| <span class="cmd">10</span>
+| ← <span class="red">None from doubler(lst=[1, [2, [3], 4], 5])</span></pre>
+</div>
+</div>
+</section>
+</section>
+<section class="section" id="trees">
+<h2>Trees<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#trees" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="id6">
+<p>A data structure where one item points to many items</p>
+<div class="compare docutils container">
+<div class="docutils container">
+<div class="resizer" style="width: 100%;"><div class="graphviz"><object data="./Recursion_files/graphviz-6b51ad51a12b815165c35746de68d5645a2d159e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph fs {
+root [label="/"];
+users [label="Users/"];
+jane [label="jane/"];
+jessica [label="jessica/"];
+resume [label="resume.txt"];
+server [label="server.py"];
+recipes [label="recipe.txt"];
+
+root -&gt; users;
+users -&gt; {jane, jessica};
+jane -&gt; {resume, recipes};
+jessica -&gt; server;
+}</p></object></div>
+</div></div>
+<div class="docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="sd">"""Tree node."""</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">children</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Node </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&gt;"</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">resume</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">"resume.txt"</span><span class="p">)</span>
+<span class="n">recipes</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">"recipes.txt"</span><span class="p">)</span>
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">"jane/"</span><span class="p">,</span> <span class="p">[</span><span class="n">resume</span><span class="p">,</span> <span class="n">recipes</span><span class="p">])</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">"server.py"</span><span class="p">)</span>
+<span class="n">jessica</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">"jessica/"</span><span class="p">,</span> <span class="p">[</span><span class="n">server</span><span class="p">])</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">"Users/"</span><span class="p">,</span> <span class="p">[</span><span class="n">jane</span><span class="p">,</span> <span class="n">jessica</span><span class="p">])</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">"/"</span><span class="p">,</span> <span class="p">[</span><span class="n">users</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="compare docutils container">
+<div class="docutils container">
+<div class="resizer" style="width: 100%;"><div class="graphviz"><object data="./Recursion_files/graphviz-6b51ad51a12b815165c35746de68d5645a2d159e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph fs {
+root [label="/"];
+users [label="Users/"];
+jane [label="jane/"];
+jessica [label="jessica/"];
+resume [label="resume.txt"];
+server [label="server.py"];
+recipes [label="recipe.txt"];
+
+root -&gt; users;
+users -&gt; {jane, jessica};
+jane -&gt; {resume, recipes};
+jessica -&gt; server;
+}</p></object></div>
+</div></div>
+<div class="docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">list_nodes</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">"""List all nodes."""</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">list_nodes</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span>
+<span class="n">Users</span><span class="o">/</span>
+<span class="n">jane</span><span class="o">/</span>
+<span class="n">resume</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">recipes</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">jessica</span><span class="o">/</span>
+<span class="n">server</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="indenting-recursive">
+<h3>Indenting Recursive<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#indenting-recursive" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span>
+  <span class="n">Users</span><span class="o">/</span>
+    <span class="n">jane</span><span class="o">/</span>
+      <span class="n">resume</span><span class="o">.</span><span class="n">txt</span>
+      <span class="n">recipes</span><span class="o">.</span><span class="n">txt</span>
+    <span class="n">jessica</span><span class="o">/</span>
+      <span class="n">server</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">indent_list</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""List all nodes, indented."""</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"  "</span> <span class="o">*</span> <span class="n">depth</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">indent_list</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section class="section" id="recognizing-recursion">
+<h2>Recognizing Recursion<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#recognizing-recursion" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="filesystems">
+<h3>Filesystems<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#filesystems" title="Permalink to this headline">¶</a></h3>
+<div class="resizer" style="width: 300px;"><div class="graphviz"><object data="./Recursion_files/graphviz-c6ad7aea3d27d3186488ef7f5c76a38120ad028e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph rating {
+root [label=&lt;/&gt;]
+joel [label=&lt;joel/&gt;]
+home [label=&lt;home/&gt;]
+tmp [label=&lt;tmp/&gt;]
+test [label=&lt;test.py&gt;]
+index [label=&lt;index.html&gt;]
+tests [label=&lt;tests.py&gt;]
+play [label=&lt;play.txt&gt;]
+root -&gt; home -&gt; joel -&gt; test
+joel -&gt; index
+joel -&gt; tests
+root -&gt; tmp -&gt; play
+}</p></object></div>
+</div></section>
+<section class="section" id="fractals">
+<h3>Fractals<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#fractals" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/fractal.png" src="./Recursion_files/fractal.png" style="width: 20em;">
+</section>
+<section class="section" id="parsing">
+<h3>Parsing<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#parsing" title="Permalink to this headline">¶</a></h3>
+<p>1 × ( 2 + 3 × ( 4 + 5 × 6 ) + 7 )</p>
+<div class="fragment docutils container">
+<p>This is a particularly good, hard exercise to give yourself.</p>
+</div>
+</section>
+<section class="section" id="nested-data">
+<h3>Nested Data<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#nested-data" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Body<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>One<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Two
+        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Two A<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Two B<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section class="section" id="looking-ahead">
+<h2>Looking Ahead<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#looking-ahead" title="Permalink to this headline">¶</a></h2>
+<section class="section" id="coming-up">
+<h3>Coming Up<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#coming-up" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Graphs using recursion</p></li>
+<li><p>Sorting algorithms using recursion</p></li>
+<li><p>Practice problems involving recursion</p></li>
+</ul>
+</section>
+<section class="section" id="resources">
+<h3>Resources<a class="headerlink" href="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/index.html#resources" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://runestone.academy/runestone/books/published/pythonds/Recursion/Objectives.html" target="_blank">Recursion in Problem Solving with Algorithms and Data Structures</a></p></li>
+<li><p><a class="reference external" href="http://www.pythontutor.com/visualize.html" target="_blank">Python Visualizer</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+        </main>
+
+        <footer id="page-footer">
+            <p>© 2024 Hackbright Academy</p>
+        </footer>
+      </div>
+
+      <script src="./Recursion_files/main.js"></script>
+        <script src="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/_static/jquery.js"></script>
+        <script src="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/_static/underscore.js"></script>
+        <script src="file:///Users/stevechait/src/swe-curriculum/lectures/recursion/_build/handouts/_static/doctools.js"></script>
+  
+</body></html>
